@@ -73,6 +73,7 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
             person.name = newName
             
             self?.collectionView.reloadData()
+            self?.save()
         })
         
         let deleteAPersonAC = UIAlertController(title: "Delete a person", message: "Are you sure you would like to delete this person?", preferredStyle: .alert)
