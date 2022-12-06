@@ -1,3 +1,10 @@
+//
+//  ViewController.swift
+//  Project12b
+//
+//  Created by Edwin Przeźwiecki Jr. on 08/08/2022.
+//
+
 import UIKit
 
 class ViewController: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -9,6 +16,7 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewPerson))
         
+        /// Project 12b:
         let defaults = UserDefaults.standard
 
         if let savedPeople = defaults.object(forKey: "people") as? Data {
@@ -27,16 +35,18 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Person", for: indexPath) as? PersonCell else {
             fatalError("Unable to dequeue PersonCell.")
         }
+        
         let person = people[indexPath.item]
         
         cell.name.text = person.name
         
         let path = getDocumentsDirectory().appendingPathComponent(person.image)
-        cell.imageView.image = UIImage(contentsOfFile: path.path)
         
+        cell.imageView.image = UIImage(contentsOfFile: path.path)
         cell.imageView.layer.borderColor = UIColor(white: 0, alpha: 0.3).cgColor
         cell.imageView.layer.borderWidth = 2
         cell.imageView.layer.cornerRadius = 3
@@ -59,13 +69,16 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
          
          self?.collectionView.reloadData()
      })
+     
      present(alertController, animated: true)
  } */
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
      let person = people[indexPath.item]
         
         let setANameAC = UIAlertController(title: "Set a name", message: "Please enter a name.", preferredStyle: .alert)
+        
         setANameAC.addTextField()
         setANameAC.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         setANameAC.addAction(UIAlertAction(title: "Save", style: .default) { [weak self, weak setANameAC] _ in
@@ -73,10 +86,12 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
             person.name = newName
             
             self?.collectionView.reloadData()
+            /// Project 12b:
             self?.save()
         })
         
         let deleteAPersonAC = UIAlertController(title: "Delete a person", message: "Are you sure you would like to delete this person?", preferredStyle: .alert)
+        
         deleteAPersonAC.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         deleteAPersonAC.addAction(UIAlertAction(title: "Delete", style: .default) { UIAlertAction in
             self.people.remove(at: indexPath.item)
@@ -84,6 +99,7 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         })
         
         let alertController = UIAlertController(title: "What would you like to do?", message: nil, preferredStyle: .alert)
+        
         alertController.addAction(UIAlertAction(title: "Set a name", style: .default) { UIAlertAction in
             DispatchQueue.main.async {
                 self.present(setANameAC, animated: true)
@@ -100,7 +116,9 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
     }
     
     @objc func addNewPerson() {
+        
         let picker = UIImagePickerController()
+        
         picker.allowsEditing = true
         
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
@@ -110,6 +128,7 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
             }
         
         picker.delegate = self
+        
         present(picker, animated: true)
     }
     
@@ -125,7 +144,9 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         }
         
         let person = Person(name: "Unknown", image: imageName)
+        
         people.append(person)
+        
         collectionView.reloadData()
         
         dismiss(animated: true)
@@ -136,8 +157,11 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         return paths[0]
     }
     
+    /// Project 12b:
     func save() {
+        
         let jsonEncoder = JSONEncoder()
+        
         if let savedData = try? jsonEncoder.encode(people) {
             let defaults = UserDefaults.standard
             defaults.set(savedData, forKey: "people")

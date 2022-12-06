@@ -63,11 +63,11 @@
 				B8F4529228A13CAA0003D3F6 /* AppDelegate.swift */,
 				B8F4529428A13CAA0003D3F6 /* SceneDelegate.swift */,
 				B8F4529628A13CAA0003D3F6 /* ViewController.swift */,
-				B8F4529828A13CAA0003D3F6 /* Main.storyboard */,
 				B8F452A828A13E470003D3F6 /* Person.swift */,
 				B8F452A628A13D030003D3F6 /* PersonCell.swift */,
-				B8F4529B28A13CAC0003D3F6 /* Assets.xcassets */,
+				B8F4529828A13CAA0003D3F6 /* Main.storyboard */,
 				B8F4529D28A13CAC0003D3F6 /* LaunchScreen.storyboard */,
+				B8F4529B28A13CAC0003D3F6 /* Assets.xcassets */,
 				B8F452A028A13CAC0003D3F6 /* Info.plist */,
 			);
 			path = Project12b;
